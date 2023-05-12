@@ -44,4 +44,4 @@ app.*.map.json
 /android/app/release
 
 #Api_const.dart
-lib/core/const/Api_const.dart
+lib/Core/const/Api_const.dart
