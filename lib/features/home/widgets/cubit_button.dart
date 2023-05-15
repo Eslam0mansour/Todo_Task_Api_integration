@@ -34,13 +34,13 @@ class CubitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 120,
       width: 100,
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: const EdgeInsets.all(7),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: clr,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
       ),
       child: InkWell(
         onTap: function,
@@ -67,10 +67,11 @@ class CubitButton extends StatelessWidget {
               text!,
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   color: (Theme.of(context).brightness == Brightness.dark)
-                      ? AppColors.darkBlue
+                      ? AppColors.white
                       : Colors.white,
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w500),
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

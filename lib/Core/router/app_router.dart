@@ -7,8 +7,10 @@ import 'package:todo_task/features/auth/presentation/login.dart';
 import 'package:todo_task/features/auth/presentation/onbording/intro_screen.dart';
 import 'package:todo_task/features/auth/presentation/onbording/second_intro.dart';
 import 'package:todo_task/features/auth/presentation/register.dart';
+import 'package:todo_task/features/home/data/models/todo_data.dart';
 import 'package:todo_task/features/home/presentation/home.dart';
 import 'package:todo_task/features/home/presentation/todos_screen.dart';
+import 'package:todo_task/features/home/widgets/todo_item.dart';
 import 'package:todo_task/main.dart';
 
 
@@ -37,7 +39,9 @@ class AppRouter {
             direction: AxisDirection.right, child:  const OnBoarding());
         case ScreensNames.todos:
         return CustomPageRoute(
-            direction: AxisDirection.right, child:  const TodosScreen());
+            direction: AxisDirection.right, child:   TodosScreen(
+              listId: settings.arguments as int,
+        ));
 
       default:
         return null;

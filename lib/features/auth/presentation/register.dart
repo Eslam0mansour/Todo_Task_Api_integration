@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_task/Core/const/colors.dart';
 import 'package:todo_task/Core/const/screens_Names.dart';
+import 'package:todo_task/features/auth/cubit/auth_cubit.dart';
+import 'package:todo_task/features/auth/cubit/auth_states.dart';
 import 'package:todo_task/features/auth/widgets/my_form_field.dart';
 
 class Register extends StatelessWidget {
@@ -29,9 +32,7 @@ class Register extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-         padding: const EdgeInsets.only(
-            top: 30
-         ),
+          padding: const EdgeInsets.only(top: 30),
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 20,
@@ -84,6 +85,9 @@ class Register extends StatelessWidget {
                           if (value.isEmpty) {
                             return 'Please enter your email';
                           }
+                          else if (!value.contains('@')) {
+                            return 'Please enter a valid email';
+                          }
                           return null;
                         },
                       ),
@@ -94,38 +98,57 @@ class Register extends StatelessWidget {
                           if (value.isEmpty) {
                             return 'Please enter your password';
                           }
+                          else if (value.length < 8) {
+                            return 'at least 8 characters';
+                          }
+                          else if (!value.contains(RegExp(r'[0-9]'))) {
+                            return 'at least one number';
+                          }
+                          else if (!value.contains(RegExp(r'[A-Z]'))) {
+                            return 'at least one capital letter';
+                          }
+                          else if(!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
+                            return 'at least one special character';
+                          }
                           return null;
                         },
                       ),
                       RichText(
                         text: TextSpan(
                           text: 'by signing up you agree to our ',
-                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                fontSize: 10.sp,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    fontSize: 10.sp,
+                                  ),
                           children: [
                             TextSpan(
                               text: 'Terms of service',
-                              style:
-                                  Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                        fontSize: 10.sp,
-                                        color: AppColors.thirdColor,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    fontSize: 10.sp,
+                                    color: AppColors.thirdColor,
+                                  ),
                             ),
                             TextSpan(
                               text: ' and ',
-                              style:
-                                  Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                        fontSize: 10.sp,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    fontSize: 10.sp,
+                                  ),
                             ),
                             TextSpan(
                               text: 'Privacy policy',
-                              style:
-                                  Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                        fontSize: 10.sp,
-                                        color: AppColors.thirdColor,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    fontSize: 10.sp,
+                                    color: AppColors.thirdColor,
+                                  ),
                             ),
                           ],
                         ),
@@ -133,18 +156,44 @@ class Register extends StatelessWidget {
                       const SizedBox(
                         height: 50,
                       ),
-                      ElevatedButton(
-                        style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            AppColors.secondaryColor,
+                      BlocConsumer<AuthCubit, AuthState>(
+                          listener: (context, state) {
+                        if (state is RegisterSuccessState) {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, ScreensNames.home, (route) => false);
+                        }
+                      }, builder: (context, state) {
+                        return ElevatedButton(
+                          style: Theme.of(context)
+                              .elevatedButtonTheme
+                              .style!
+                              .copyWith(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  AppColors.secondaryColor,
+                                ),
+                                minimumSize: MaterialStateProperty.all<Size>(
+                                  const Size(double.infinity, 50),
+                                ),
+                              ),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              AuthCubit.get(context).register(
+                                email: emailController.text,
+                                password: passwordController.text,
+                                name: nameController.text,
+                              );
+                            }
+                          },
+                          child: state is RegisterLoadingState  ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
                             ),
-                          minimumSize: MaterialStateProperty.all<Size>(
-                            const Size(double.infinity, 50),
-                            ),
-                        ),
-                        onPressed: () {},
-                        child: const Text('SIGN UP'),
-                      ),
+                          ) : const Text(
+                            'SIGN UP',
+                          ),
+                        );
+                      }),
                       const SizedBox(
                         height: 20,
                       ),
@@ -159,11 +208,16 @@ class Register extends StatelessWidget {
                             children: [
                               TextSpan(
                                 text: 'LOGIN',
-                                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                  color: Theme.of(context).colorScheme.secondary,
-                                  fontSize: 12.sp,
-                                  decoration: TextDecoration.underline,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      fontSize: 12.sp,
+                                      decoration: TextDecoration.underline,
+                                    ),
                               ),
                             ],
                           ),

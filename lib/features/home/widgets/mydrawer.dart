@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_task/Core/const/colors.dart';
+import 'package:todo_task/features/auth/cubit/auth_cubit.dart';
+import 'package:todo_task/features/auth/cubit/auth_states.dart';
 
 class MyDrawer extends StatelessWidget {
   MyDrawer({
@@ -20,7 +23,7 @@ class MyDrawer extends StatelessWidget {
             DrawerHeader(
               margin: const EdgeInsets.all(0),
               padding: const EdgeInsets.all(0),
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                 color: (Theme.of(context).brightness == Brightness.dark)
                     ? AppColors.darkBlue
                     : const Color(0xFFF6F6F6),
@@ -54,28 +57,30 @@ class MyDrawer extends StatelessWidget {
                           radius: 30,
                         ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Hello Alma',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'alma.lawson@example.com',
-                            style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text( context.read<AuthCubit>().currentUser!.name ,
+                                  style:
+                                      Theme.of(context).textTheme.labelLarge),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                context.read<AuthCubit>().currentUser!.email ,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
                                       fontSize: 8.sp,
-                                  fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                          ),
-                        ],
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -121,6 +126,21 @@ class MyDrawer extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium!),
               onTap: () {},
             ),
+            //  log out
+            BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
+              return ListTile(
+                leading: Icon(
+                  Icons.logout,
+                  color: Theme.of(context).iconTheme.color,
+                  size: 30,
+                ),
+                title: Text('Log out',
+                    style: Theme.of(context).textTheme.titleMedium!),
+                onTap: () {
+                  AuthCubit.get(context).logout();
+                },
+              );
+            }),
           ],
         ));
   }

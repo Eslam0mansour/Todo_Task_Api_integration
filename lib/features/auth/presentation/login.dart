@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_task/Core/const/colors.dart';
 import 'package:todo_task/Core/const/screens_Names.dart';
+import 'package:todo_task/features/auth/cubit/auth_cubit.dart';
+import 'package:todo_task/features/auth/cubit/auth_states.dart';
 import 'package:todo_task/features/auth/widgets/my_form_field.dart';
 
 class Login extends StatelessWidget {
@@ -71,9 +75,6 @@ class Login extends StatelessWidget {
                           if (value.isEmpty) {
                             return 'Please enter your email';
                           }
-                          else if(!value.contains('@')){
-                            return 'email must be like this ex@etc.com';
-                          }
                           return null;
                         },
                       ),
@@ -102,24 +103,56 @@ class Login extends StatelessWidget {
                       const SizedBox(
                         height: 50,
                       ),
-                      ElevatedButton(
-                        style: Theme.of(context)
-                            .elevatedButtonTheme
-                            .style!
-                            .copyWith(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                AppColors.secondaryColor,
-                              ),
-                              minimumSize: MaterialStateProperty.all<Size>(
-                                const Size(double.infinity, 50),
-                              ),
+                      BlocConsumer<AuthCubit,AuthState>(
+                          listener: (context, state) {
+                            if (state is RegisterSuccessState) {
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, ScreensNames.home, (route) => false);
+                            }
+                            if (state is LoginFailureState) {
+                              Fluttertoast.showToast(
+                                  msg: state.errorMessage,
+                                  toastLength: Toast.LENGTH_LONG,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: AppColors.primaryColor,
+                                  textColor: AppColors.white,
+                                  fontSize: 16.0
+                              );
+                            }
+                          },
+                          builder: (context, state) {
+                          return ElevatedButton(
+                            style: Theme.of(context)
+                                .elevatedButtonTheme
+                                .style!
+                                .copyWith(
+                                  backgroundColor: MaterialStateProperty.all<Color>(
+                                    AppColors.secondaryColor,
+                                  ),
+                                  minimumSize: MaterialStateProperty.all<Size>(
+                                    const Size(double.infinity, 50),
+                                  ),
+                                ),
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                BlocProvider.of<AuthCubit>(context).login(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                );
+                              }
+                            },
+                            child: state is LoginLoadingState
+                                ? const Center(
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.white,
+                                    ),
+                                  )
+                                : const Text(
+                                    'LOG IN',
                             ),
-                        onPressed: () {
-                            Navigator.pushNamed(
-                                context, ScreensNames.home);
-
-                        },
-                        child: const Text('LOG IN'),
+                          );
+                        }
                       ),
                       const SizedBox(
                         height: 40,

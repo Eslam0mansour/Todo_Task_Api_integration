@@ -25,7 +25,7 @@ void main() async {
           create: (context) => AuthCubit()..init(),
         ),
         BlocProvider<HomeCubit>(
-          create: (context) => HomeCubit(),
+          create: (context) => HomeCubit()..getTodoLists(),
         ),
       ],
       child: MyApp.create(),
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         if (state is NotHaveCurrentUser) {
           Future.delayed(const Duration(seconds: 1), () {
             _navigatorKey.currentState?.pushNamedAndRemoveUntil(
-                ScreensNames.onBoardingIntro, (r) => false);
+                ScreensNames.login, (r) => false);
           });
         }
         if (state is HaveCurrentUser) {

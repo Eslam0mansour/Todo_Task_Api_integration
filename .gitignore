@@ -43,5 +43,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-#Api_const.dart
-/lib/Core/const/Api_const.dart
+# hide /lib/Core/const/Api_const.dart
+lib/Core/const/Api_const.dart
