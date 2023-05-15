@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:sizer/sizer.dart';
+import 'package:todo_task/Core/const/colors.dart';
 import 'package:todo_task/Core/const/screens_Names.dart';
 import 'package:todo_task/Core/di/di.dart';
 import 'package:todo_task/Core/observer/BlocObserver.dart';
@@ -90,22 +91,18 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.teal,
+        backgroundColor: AppColors.primaryColor,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children:  [
             Text(
-              'Todos',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
+              'Welcome back',
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Center(
+            const Center(
               child: CircularProgressIndicator(
                 color: Colors.white,
               ),

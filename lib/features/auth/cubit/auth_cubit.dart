@@ -24,12 +24,13 @@ class AuthCubit extends Cubit<AuthState> {
     sl<MyDio>().getData(endPoint: '/api/Account').then((value) {
         if (value is ApiSuccess) {
           handleLoginResponse(value.data, '');
+          emit(HaveCurrentUser());
         } else if (value is ApiFailure) {
           emit(LoginFailureState(value.message));
           print('${value.message}----------------------------------------------');
+          emit(NotHaveCurrentUser());
         }
       });
-      emit(HaveCurrentUser());
     } else {
       emit(NotHaveCurrentUser());
     }
@@ -84,7 +85,7 @@ class AuthCubit extends Cubit<AuthState> {
         case '404':
         return 'Server Not found';
       default:
-        return 'Please enter a valid data';
+        return msg;
     }
   }
   void handleLoginResponse(json, String email) {
