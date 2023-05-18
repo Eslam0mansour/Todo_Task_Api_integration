@@ -1,11 +1,17 @@
 
 import 'dart:convert';
 
+import 'package:todo_task/features/authentication/domain/entities/user_entity.dart';
+
 UserData userDataFromJson(String str) => UserData.fromJson(json.decode(str));
 
 String userDataToJson(UserData data) => json.encode(data.toJson());
 
-class UserData {
+class UserData extends UserEntity{
+  String? _name;
+  String? _email;
+  String? _password;
+
   UserData({
     String? name,
     String? email,
@@ -22,9 +28,7 @@ class UserData {
     _password = json['password'];
   }
 
-  String? _name;
-  String? _email;
-  String? _password;
+
 
   UserData copyWith({
     String? name,

@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_task/Core/const/colors.dart';
 import 'package:todo_task/Core/const/screens_Names.dart';
-import 'package:todo_task/features/auth/cubit/auth_cubit.dart';
-import 'package:todo_task/features/auth/cubit/auth_states.dart';
-import 'package:todo_task/features/auth/widgets/my_form_field.dart';
+import 'package:todo_task/features/authentication/presentation/cubit/auth_cubit.dart';
+import 'package:todo_task/features/authentication/presentation/cubit/auth_states.dart';
+import 'package:todo_task/features/authentication/presentation/widgets/my_form_field.dart';
 
 class Register extends StatelessWidget {
   Register({Key? key}) : super(key: key);

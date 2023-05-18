@@ -5,11 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_task/Core/const/colors.dart';
 import 'package:todo_task/Core/const/screens_Names.dart';
-import 'package:todo_task/features/auth/widgets/my_form_field.dart';
-import 'package:todo_task/features/home/cubit/home_cubit.dart';
-import 'package:todo_task/features/home/cubit/home_staets.dart';
-import 'package:todo_task/features/home/widgets/cubit_button.dart';
-import 'package:todo_task/features/home/widgets/mydrawer.dart';
+import 'package:todo_task/features/authentication/presentation/widgets/my_form_field.dart';
+import 'package:todo_task/features/home/presentation/cubit/home_cubit.dart';
+import 'package:todo_task/features/home/presentation/cubit/home_staets.dart';
+import 'package:todo_task/features/home/presentation/widgets/cubit_button.dart';
+import 'package:todo_task/features/home/presentation/widgets/mydrawer.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);

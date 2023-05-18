@@ -3,11 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_task/Core/const/colors.dart';
-import 'package:todo_task/features/auth/widgets/my_form_field.dart';
-import 'package:todo_task/features/home/cubit/home_cubit.dart';
-import 'package:todo_task/features/home/cubit/home_staets.dart';
-import 'package:todo_task/features/home/data/models/todo_data.dart';
-import 'package:todo_task/features/home/widgets/todo_item.dart';
+import 'package:todo_task/features/authentication/presentation/widgets/my_form_field.dart';
+import 'package:todo_task/features/home/presentation/cubit/home_cubit.dart';
+import 'package:todo_task/features/home/presentation/cubit/home_staets.dart';
+import 'package:todo_task/features/home/presentation/widgets/todo_item.dart';
 
 class TodosScreen extends StatelessWidget {
   final int listId;

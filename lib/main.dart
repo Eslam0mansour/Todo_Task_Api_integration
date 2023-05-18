@@ -9,9 +9,9 @@ import 'package:todo_task/Core/observer/BlocObserver.dart';
 import 'package:todo_task/Core/router/app_router.dart';
 import 'package:todo_task/Core/services/local/my_shared_preferences.dart';
 import 'package:todo_task/Core/styles/theme.dart';
-import 'package:todo_task/features/auth/cubit/auth_cubit.dart';
-import 'package:todo_task/features/auth/cubit/auth_states.dart';
-import 'package:todo_task/features/home/cubit/home_cubit.dart';
+import 'package:todo_task/features/authentication/presentation/cubit/auth_cubit.dart';
+import 'package:todo_task/features/authentication/presentation/cubit/auth_states.dart';
+import 'package:todo_task/features/home/presentation/cubit/home_cubit.dart';
 //a
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

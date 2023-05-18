@@ -3,15 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:todo_task/Core/const/screens_Names.dart';
 import 'package:todo_task/Core/router/custom_page_route.dart';
-import 'package:todo_task/features/auth/presentation/login.dart';
-import 'package:todo_task/features/auth/presentation/onbording/intro_screen.dart';
-import 'package:todo_task/features/auth/presentation/onbording/second_intro.dart';
-import 'package:todo_task/features/auth/presentation/register.dart';
-import 'package:todo_task/features/home/data/models/todo_data.dart';
-import 'package:todo_task/features/home/presentation/home.dart';
-import 'package:todo_task/features/home/presentation/todos_screen.dart';
-import 'package:todo_task/features/home/widgets/todo_item.dart';
+import 'package:todo_task/features/authentication/presentation/screens/login.dart';
+import 'package:todo_task/features/authentication/presentation/screens/register.dart';
+import 'package:todo_task/features/authentication/presentation/screens/onbording/second_intro.dart';
+import 'package:todo_task/features/home/presentation/screens/home.dart';
+import 'package:todo_task/features/home/presentation/screens/todos_screen.dart';
 import 'package:todo_task/main.dart';
+
+import '../../features/authentication/presentation/screens/onbording/intro_screen.dart';
 
 
 class AppRouter {
