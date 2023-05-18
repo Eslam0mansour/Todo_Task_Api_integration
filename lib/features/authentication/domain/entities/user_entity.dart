@@ -1,3 +1,4 @@
+
 class UserEntity {
   final String name;
   final String email;
