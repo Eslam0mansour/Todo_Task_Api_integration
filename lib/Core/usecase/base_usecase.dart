@@ -8,3 +8,6 @@ abstract class BaseUseCaseWithParam<T, Params> {
 abstract class BaseUseCase<T> {
   Future<Either<Failure, T>> call();
 }
+abstract class UseCase<T> {
+  Future<T> call();
+}

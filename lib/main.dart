@@ -10,10 +10,12 @@ import 'package:todo_task/Core/router/app_router.dart';
 import 'package:todo_task/Core/services/local/my_shared_preferences.dart';
 import 'package:todo_task/Core/styles/theme.dart';
 import 'package:todo_task/features/authentication/domain/usecases/login_usecase.dart';
+import 'package:todo_task/features/authentication/domain/usecases/logout_usecase.dart';
 import 'package:todo_task/features/authentication/domain/usecases/register_usecase.dart';
 import 'package:todo_task/features/authentication/presentation/cubit/auth_cubit.dart';
 import 'package:todo_task/features/authentication/presentation/cubit/auth_states.dart';
 import 'package:todo_task/features/home/presentation/cubit/home_cubit.dart';
+
 //a
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,10 +26,7 @@ void main() async {
     child: MultiBlocProvider(
       providers: [
         BlocProvider<AuthCubit>(
-          create: (context) => AuthCubit(
-            sl<LoginUseCase>(),
-            sl<RegisterUseCase>(),
-          )..init(),
+          create: (context) => sl<AuthCubit>()..init(),
         ),
         BlocProvider<HomeCubit>(
           create: (context) => HomeCubit()..getTodoLists(),
@@ -48,8 +47,8 @@ class MyApp extends StatelessWidget {
       listener: (context, state) {
         if (state is NotHaveCurrentUser) {
           Future.delayed(const Duration(seconds: 1), () {
-            _navigatorKey.currentState?.pushNamedAndRemoveUntil(
-                ScreensNames.login, (r) => false);
+            _navigatorKey.currentState
+                ?.pushNamedAndRemoveUntil(ScreensNames.login, (r) => false);
           });
         }
         if (state is HaveCurrentUser) {
@@ -74,12 +73,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        navigatorKey: _navigatorKey,
-        onGenerateRoute: sl<AppRouter>().onGenerateRoute
-      );
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          navigatorKey: _navigatorKey,
+          onGenerateRoute: sl<AppRouter>().onGenerateRoute);
     });
   }
 }
@@ -98,7 +96,7 @@ class _SplashState extends State<Splash> {
         backgroundColor: AppColors.primaryColor,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children:  [
+          children: [
             Text(
               'Welcome back',
               style: Theme.of(context).textTheme.headlineMedium,
@@ -143,7 +141,7 @@ class _NoInternetState extends State<NoInternet> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-           Text(
+          Text(
             'يرجي التحقق من الاتصال بالانترنت \n ثم اعد المحاولة',
             style: Theme.of(context).textTheme.titleLarge,
             textAlign: TextAlign.center,

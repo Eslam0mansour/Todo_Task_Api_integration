@@ -14,4 +14,6 @@ abstract class AuthRepo {
     required String name,
   });
 
+  Future<void> logout();
+
 }

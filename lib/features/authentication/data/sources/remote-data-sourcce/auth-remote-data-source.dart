@@ -1,3 +1,5 @@
+import 'package:todo_task/Core/di/di.dart';
+import 'package:todo_task/Core/services/local/my_shared_preferences.dart';
 import 'package:todo_task/Core/services/network/main_dio.dart';
 import 'package:todo_task/features/authentication/data/models/user_model.dart';
 import 'package:todo_task/features/authentication/domain/entities/user_entity.dart';
@@ -6,6 +8,8 @@ abstract class AuthRemoteDataSource {
   Future<UserEntity> login(String email, String password);
 
   Future<UserEntity> register(String email, String password , String name);
+
+  Future<void> logout();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -44,5 +48,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } else {
       throw Exception('Something went wrong');
     }
+  }
+
+  @override
+  Future<void> logout() async{
+    sl<MySharedPref>().putString(key: MySharedKeys.apiToken, value: '');
   }
 }
