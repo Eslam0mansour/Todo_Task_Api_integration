@@ -17,7 +17,7 @@ class UserData extends UserEntity {
     return UserData(
       name: map['displayName'].toString(),
       email: map['email'],
-      password: map['password'],
+      password: map['password'].toString(),
     );
   }
 }

@@ -57,6 +57,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> login({required String email, required String password}) async {
+    emit(LoginLoadingState());
     ApiResults apiResults = await sl<MyDio>().postData(
       endPoint: '/api/Account/Login',
       data: {"email": email, "password": password},
