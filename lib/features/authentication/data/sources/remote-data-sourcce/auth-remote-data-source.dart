@@ -1,10 +1,11 @@
 import 'package:todo_task/Core/services/network/main_dio.dart';
+import 'package:todo_task/features/authentication/data/models/user_model.dart';
 import 'package:todo_task/features/authentication/domain/entities/user_entity.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<ApiResults> login(String email, String password);
+  Future<UserEntity> login(String email, String password);
 
-  Future<ApiResults> register(String email, String password , String name);
+  Future<UserEntity> register(String email, String password , String name);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -12,16 +13,22 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   AuthRemoteDataSourceImpl({required this.myDio});
   @override
-  Future<ApiResults> login(String email, String password) async{
+  Future<UserEntity> login(String email, String password) async{
     ApiResults  apiResults = await myDio.postData(
       endPoint: '/api/Account/Login',
       data: {"email": email, "password": password},
     );
-    return apiResults;
+    if (apiResults is ApiSuccess) {
+      return UserData.fromJson(apiResults.data);
+    } else if (apiResults is ApiFailure) {
+      throw Exception(apiResults.message);
+    } else {
+      throw Exception('Something went wrong');
+    }
   }
 
   @override
-  Future<ApiResults> register(String email, String password , String name) async{
+  Future<UserEntity> register(String email, String password , String name) async{
     ApiResults apiResults = await myDio.postData(
       endPoint: '/api/Account/Register',
       data: {
@@ -30,6 +37,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         "password": password,
       },
     );
-    return apiResults;
+    if (apiResults is ApiSuccess) {
+      return UserData.fromJson(apiResults.data);
+    } else if (apiResults is ApiFailure) {
+      throw Exception(apiResults.message);
+    } else {
+      throw Exception('Something went wrong');
+    }
   }
 }

@@ -59,19 +59,20 @@ class MyDrawer extends StatelessWidget {
                           radius: 30,
                         ),
                       ),
-                      BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
+                      BlocBuilder<AuthCubit, AuthState>(
+                        builder: (context, state) {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text( context.read<AuthCubit>().currentUser!.name ,
+                              Text( context.read<AuthCubit>().user!.nameE! ,
                                   style:
                                       Theme.of(context).textTheme.labelLarge),
                               const SizedBox(
                                 height: 5,
                               ),
                               Text(
-                                context.read<AuthCubit>().currentUser!.email ,
+                                context.read<AuthCubit>().user!.emailE! ,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge!

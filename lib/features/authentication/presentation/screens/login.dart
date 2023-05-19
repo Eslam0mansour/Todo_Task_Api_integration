@@ -139,10 +139,10 @@ class Login extends StatelessWidget {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 FocusScope.of(context).unfocus();
-                                BlocProvider.of<AuthCubit>(context).login(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                );
+                                context.read<AuthCubit>().login(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                    );
                               }
                             },
                             child: state is LoginLoadingState

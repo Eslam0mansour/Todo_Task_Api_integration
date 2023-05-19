@@ -185,11 +185,10 @@ class MyDio {
         printResponse('body:    $data');
         printResponse('response:    $e');
         return ApiFailure(' ${e.response}11111111111111111111');
-      } else if (e.type == DioErrorType.connectionTimeout) {
-        // print('check your connection');
+      }
+      else if (e.type == DioErrorType.connectionTimeout) {
         return ApiFailure("تأكد من اتصالك بالانترنت");
       } else if (e.type == DioErrorType.receiveTimeout) {
-        // print('unable to connect to the server');
         return ApiFailure("غير قادر علي الاتصال بالسيرفر");
       } else {
         return ApiFailure("حدث خطأ حاول مرة اخري");
