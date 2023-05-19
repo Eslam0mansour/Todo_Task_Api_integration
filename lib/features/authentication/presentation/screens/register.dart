@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_task/Core/const/colors.dart';
 import 'package:todo_task/Core/const/screens_Names.dart';
@@ -103,6 +104,8 @@ class Register extends StatelessWidget {
                             return 'at least one number';
                           } else if (!value.contains(RegExp(r'[A-Z]'))) {
                             return 'at least one capital letter';
+                          } else if (!value.contains(RegExp(r'[a-z]'))) {
+                            return 'at least one small letter';
                           } else if (!value
                               .contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
                             return 'at least one special character';
@@ -159,6 +162,17 @@ class Register extends StatelessWidget {
                           BlocProvider.of<HomeCubit>(context).getTodoLists();
                           Navigator.pushNamedAndRemoveUntil(
                               context, ScreensNames.home, (route) => false);
+                        }
+                        if (state is RegisterFailureState) {
+                          Fluttertoast.showToast(
+                              msg: state.errorMessage,
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: AppColors.primaryColor,
+                              textColor: AppColors.white,
+                              fontSize: 16.0
+                          );
                         }
                       }, builder: (context, state) {
                         return ElevatedButton(

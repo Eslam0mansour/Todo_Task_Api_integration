@@ -1,4 +1,3 @@
-
 import 'package:todo_task/features/authentication/domain/entities/user_entity.dart';
 
 class UserData extends UserEntity {

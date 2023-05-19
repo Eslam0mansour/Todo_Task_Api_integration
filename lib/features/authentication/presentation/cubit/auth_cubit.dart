@@ -52,7 +52,7 @@ class AuthCubit extends Cubit<AuthState> {
     if (apiResults is ApiSuccess) {
       login(email: email, password: password);
     } else if (apiResults is ApiFailure) {
-      emit(RegisterFailureState(apiResults.message));
+      emit(RegisterFailureState(errorMessage(apiResults.message)));
     }
   }
 
@@ -76,7 +76,7 @@ class AuthCubit extends Cubit<AuthState> {
       currentUser = UserData.fromJson(json);
       emit(RegisterSuccessState());
     } else {
-      emit(RegisterFailureState(json['token']));
+      emit(RegisterFailureState(errorMessage(json['message'])));
     }
   }
 
